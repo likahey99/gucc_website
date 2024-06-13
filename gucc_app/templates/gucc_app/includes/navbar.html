@@ -1,161 +1,126 @@
-<header>  
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <a class="navbar-item d-none d-lg-inline-block" href="{% url 'canoe_club:index' %}">
-            <img src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo" class="mr-2" height="40">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:index' %}">Home
-                        <span class="sr-only">(current)</span>
+{% load static %}
+<header>
+    <nav class="bg-gray-800 text-gray-300 font-medium text-sm">
+        <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <div class="relative flex items-center justify-between h-16">
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <!-- Mobile menu button-->
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                    <a href="{% url 'gucc_app:index' %}" class="flex-shrink-0 d-none d-lg-inline-block">
+                        <img class="h-10 w-auto" src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo">
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:about' %}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:trips' %}">Trips</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:socials' %}">Socials</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:gallery' %}">Gallery</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                        Inventory
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'canoe_club:main_shed' %}">Main Shed</a>
-                        <a class="dropdown-item" href="{% url 'canoe_club:maintenance_shed' %}">Repair Shed</a>
-                        <a class="dropdown-item" href="#">Pool Cupboard</a>
+                    <div class="hidden sm:block sm:ml-6">
+                        <div class="flex space-x-4">
+                            <a href="{% url 'gucc_app:index' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Home</a>
+                            <a href="{% url 'gucc_app:about' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">About</a>
+                            <a href="{% url 'gucc_app:events' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Events</a>
+                            <a href="{% url 'gucc_app:gallery' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Gallery</a>
+                            <div class="relative">
+                                <button class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center" aria-haspopup="true" aria-expanded="false" id="inventory-dropdown">
+                                    Inventory
+                                    <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu absolute hidden bg-gray-800 pt-1" id="inventory-menu">
+                                    <a class="block px-4 py-2" href="{% url 'gucc_app:main_shed' %}">Main Shed</a>
+                                    <a class="block px-4 py-2" href="{% url 'gucc_app:macpherson_shed' %}">Repair Shed</a>
+                                    <a class="block px-4 py-2" href="#">Pool Cupboard</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </li>
-
-            </ul>
-
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:profile' user.username %}">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:logout' %}">Logout</a>
-                    </li>
-
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:register' %}">Register</a>
-                    </li>
-            
-                {%endif%}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.facebook.com/profile.php?id=100054235790441   " target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.instagram.com/gusacanoe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/likahey99/GUCC" target="_blank">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav><nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <a class="navbar-item d-none d-lg-inline-block" href="{% url 'canoe_club:index' %}">
-            <img src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo" class="mr-2" height="40">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:index' %}">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:about' %}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:trips' %}">Trips</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:socials' %}">Socials</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'canoe_club:gallery' %}">Gallery</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                        Inventory
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{% url 'canoe_club:main_shed' %}">Main Shed</a>
-                        <a class="dropdown-item" href="{% url 'canoe_club:maintenance_shed' %}">Repair Shed</a>
-                        <a class="dropdown-item" href="#">Pool Cupboard</a>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <div class="flex space-x-4">
+                        <div class="hidden sm:block">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'gucc_app:profile' user.username %}" class=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Profile</a>
+                                <a href="{% url 'gucc_app:logout' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Logout</a>
+                            {% else %}
+                                <a href="{% url 'gucc_app:login' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Login</a>
+                                <a href="{% url 'gucc_app:register' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Register</a>
+                            {% endif %}
+                        </div>
+                        <a href="https://www.facebook.com/profile.php?id=100054235790441" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/gusacanoe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://github.com/likahey99/gucc_website" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                            <i class="fab fa-github"></i>
+                        </a>
                     </div>
-                </li>
-
-            </ul>
-
-            <ul class="navbar-nav">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:profile' user.username %}">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:logout' %}">Logout</a>
-                    </li>
-
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'canoe_club:register' %}">Register</a>
-                    </li>
-            
-                {%endif%}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.facebook.com/profile.php?id=100054235790441   " target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://www.instagram.com/gusacanoe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/likahey99/GUCC" target="_blank">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </nav>
+    <!-- Mobile menu, show/hide based on menu state. -->
+<div class="sm:hidden hidden bg-slate-400 text-gray-700" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 text-base">
+        <a href="{% url 'gucc_app:index' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Home</a>
+        <a href="{% url 'gucc_app:about' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">About</a>
+        <a href="{% url 'gucc_app:events' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Events</a>
+        <a href="{% url 'gucc_app:gallery' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Gallery</a>
+        <div class="relative">
+            <button id="mobile-inventory-button" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center" aria-haspopup="true" aria-expanded="false">
+                Inventory
+                <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+            <!-- Add Tailwind CSS classes to the dropdown menu -->
+        <div id="mobile-inventory-menu" class="hidden bg-slate-300 pt-1 rounded">
+            <a class="block px-4 py-2" href="{% url 'gucc_app:main_shed' %}">Main Shed</a>
+            <a class="block px-4 py-2" href="{% url 'gucc_app:macpherson_shed' %}">Repair Shed</a>
+            <a class="block px-4 py-2" href="#">Pool Cupboard</a>
+        </div>
+        </div>
+        <!-- Add Login and Register links here -->
+        <a href="{% url 'gucc_app:login' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Login</a>
+        <a href="{% url 'gucc_app:register' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Register</a>
+    </div>
+</div>
 </header>
+
+<script>
+    document.getElementById('mobile-menu-button').addEventListener('click', function() {
+        var menu = document.getElementById('mobile-menu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            this.setAttribute('aria-expanded', 'true');
+        } else {
+            menu.classList.add('hidden');
+            this.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.getElementById('inventory-dropdown').addEventListener('click', function() {
+        var menu = document.getElementById('inventory-menu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        } else {
+            menu.classList.add('hidden');
+        }
+    });
+
+    document.getElementById('mobile-inventory-button').addEventListener('click', function() {
+        var menu = document.getElementById('mobile-inventory-menu');
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+        } else {
+            menu.classList.add('hidden');
+        }
+    });
+</script>
