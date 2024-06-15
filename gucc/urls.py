@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('', include('gucc_app.urls')),
+    path('', include('calendar_integration.urls')),
 ]
+
