@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'gucc_app', #Django app
     'theme', #Tailwind app
-    'calendar_integration', #Django calendar app
 ]
 
 MIDDLEWARE = [
