@@ -1,14 +1,22 @@
+{% extends 'gucc_app/base.html' %}
 {% load static tailwind_tags %}
-<html>
-    <head>
-        <title>GUCC</title>
-        <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" id="fontawesome-css">
-        {% tailwind_css %}
-    </head>
 
-    <body>
-        {% include './includes/navbar.html' %}
-        <h1>Hello WOrlds</h1>
-    </body>
+{% block title_block %} Home {% endblock %}
 
-</html>
+{% block head_block %}
+{% endblock %}
+
+{% block content_block %}
+    <h1 class="text-4xl text-center mt-8">Welcome to the GUCC website</h1>
+    <p class="text-center mt-4">This is a website for the Geelong Underwater Camera Club</p>
+    <p class="text-center">We are a group of underwater photographers and videographers based in Geelong, Victoria</p>
+    <p class="text-center">We meet regularly to share our work and learn from each other</p>
+    <p class="text-center">We also organise trips and events to explore the underwater world</p>
+    <p class="text-center">Please use the navigation menu to explore our website</p>
+
+    {% include './includes/calendar.html' %}
+
+
+    <!-- https://www.reddit.com/r/css/comments/buwtof/styling_an_embedded_google_calendar_beginner/ -->
+
+{% endblock %}
