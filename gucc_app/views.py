@@ -22,8 +22,9 @@ def macpherson_shed(request):
 def profile(request):
     return render(request, 'gucc_app/profile.html')
 
-def login(request):   
-    return render(request, 'gucc_app/login.html')   
+def login(request):  
+    context_dict = {'loop':range(1000)} 
+    return render(request, 'gucc_app/login.html', context=context_dict)   
 
 def register(request):
     return render(request, 'gucc_app/register.html')
