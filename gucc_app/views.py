@@ -31,3 +31,5 @@ def register(request):
 def logout(request):    
     return render(request, 'gucc_app/logout.html')
 
+def koalas(request):    
+    return render(request, 'gucc_app/koalas.html')
