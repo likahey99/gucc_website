@@ -8,9 +8,5 @@ class UserProfile(models.Model):
     position = models.CharField(max_length=20, default="member")
     admin = models.BooleanField(default=False)
 
-class ItemType(models.Model):
-    name = models.CharField(max_length=120, null=False)
-    attributes = models.CharField(max_length=1000, null=False) #<name:>
-
-class Item(models.Model):
-    
+class Helmet(models.Model):
+    type = models
