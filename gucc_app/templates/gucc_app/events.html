@@ -1,0 +1,19 @@
+{% extends 'gucc_app/base.html' %}
+{% load static tailwind_tags %}
+
+{% block title_block %} Events {% endblock %}
+
+{% block head_block %}
+{% endblock %}
+
+{% block content_block %}
+    <h1 class="text-4xl text-center mt-8">Here you can find out more about our events</h1>
+
+    {% include './includes/calendar.html' %}
+
+    <!-- https://www.reddit.com/r/css/comments/buwtof/styling_an_embedded_google_calendar_beginner/ -->
+    <p>This is basically a clone of Home rn. I think having the calendar on home is the right idea
+        but this page is also the right thing imo. On here we can have a bit more info about the events 
+        as well as links to other sites with more information.
+    </p>
+{% endblock %}
