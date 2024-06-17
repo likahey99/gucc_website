@@ -1,0 +1,45 @@
+{% extends "gucc_app/base.html" %}
+{% load static %}
+
+
+{% block title_block %}
+    About
+{% endblock %}
+
+{% block content_block %}
+<div class="container mx-auto pt-4">
+    <div class="grid grid-cols-1 gap-4">
+        <!-- First item -->
+        <div class="flex flex-col md:flex-row items-center p-4 bg-white shadow-md rounded-lg">
+            <div class="md:w-1/2 p-2">
+                <h2 class="text-center font-bold text-xl text-blue-400 ">Main About</h2>
+                <p class="text-lg font-semibold mb-2"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, omnis. Sed qui inventore sunt harum rerum fugiat fuga porro repellendus itaque, adipisci modi aut minus minima, exercitationem deserunt perferendis dolore?  Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa maiores vitae, quia, tempore praesentium possimus commodi laborum magnam quod excepturi ipsam nulla eum nihil ad cum qui repellat consequuntur aliquam!</p>
+            </div>
+            <div class="md:w-1/2 p-2">
+                <img src="{% static 'images/canoe_club_photo_2024.jpg' %}" alt="Picture 1" class="w-full h-auto rounded-lg">
+            </div>
+        </div>
+        <!-- Second item -->
+        <div class="flex flex-col md:flex-row-reverse items-center p-4 bg-white shadow-md rounded-lg">
+            <div class="md:w-1/2 p-2">
+                <h2 class="text-center font-bold text-xl text-pink-400 ">About Socials</h2>
+                <p class="text-lg font-semibold mb-2">Text for the second item</p>
+            </div>
+            <div class="md:w-1/2 p-2">
+                <img src="{% static 'images/social.jpg' %}" alt="Picture 2" class="w-full h-auto rounded-lg">
+            </div>
+        </div>
+        <!-- Third item -->
+        <div class="flex flex-col md:flex-row items-center p-4 bg-white shadow-md rounded-lg">
+            <div class="md:w-1/2 p-2">
+                <h2 class="text-center font-bold text-xl text-green-800 ">About Trips</h2>
+                <p class="text-lg font-semibold mb-2">Text for the third item</p>
+            </div>
+            <div class="md:w-1/2 p-2">
+                <img src="{% static 'images/river_trip.jpg' %}" alt="Picture 3" class="w-full h-auto rounded-lg">
+            </div>
+        </div>
+        <h1>However many abouts you want. Could do a polo or general competitions one.</h1>
+    </div>
+</div>
+{% endblock %}

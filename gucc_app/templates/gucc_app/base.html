@@ -1,6 +1,7 @@
 {% load static tailwind_tags %}
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> {% block title_block %} GUCC {% endblock %} </title>
         <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" id="fontawesome-css">
         {% tailwind_css %}
@@ -9,12 +10,13 @@
         {% endblock %}
     </head>
 
-    <body>
+    <body class="pb-5">
         {% include './includes/navbar.html' %}
         <div class="container mx-auto pt-4">
             {% block content_block %}
                 <!-- empty -->
             {% endblock %}
+        </div>
     </body>
 
-</html>
+</html> 
