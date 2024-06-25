@@ -27,7 +27,8 @@ def login(request):
     return render(request, 'gucc_app/login.html', context=context_dict)   
 
 def register(request):
-    return render(request, 'gucc_app/register.html')
+    context_dict = {'loop':range(1000)} 
+    return render(request, 'gucc_app/register.html', context=context_dict)
 
 def logout(request):    
     return render(request, 'gucc_app/logout.html')
