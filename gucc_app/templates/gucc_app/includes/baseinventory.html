@@ -37,10 +37,23 @@
         <div class="text-center mx-auto">
             <div class="flex justify-around items-center m-2">
                 <h1 class="font-medium text-xl grow">{{type}}</h1>
-                <button class="border-black border-2 rounded-xl justify-self-end mr-4 px-4">
+                <button id="togglefilter" class="border-black border-2 rounded-xl justify-self-end mr-4 px-4">
                     <h2>Filters</h2>
                 </button>
             </div>
+            <div>
+                <div id="filter" class="hidden grid grid-cols-3 mx-2">
+                    {% for i in "abc" %}
+                        <!-- Instead of filter needs to be element that opens a dropdown or list below -->
+                         <!-- probs a repeat of Filters buttons -->
+                         <!-- Per filter that then lists what you can filter by -->
+                        <!-- Filters on or off by default? -->
+
+                         {% include './filter.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+
             <div class="bg-blue-400 border-b-2 border-t-2">
             <div class="bg-blue-400 rounded-full px-3 grid grid-cols-4 justify-items-center m-2">
                 {% for head in kitheaders %}
@@ -61,6 +74,17 @@
 <script>
     document.getElementById('togglefish').addEventListener('click', function() {
     var toggleDiv = document.getElementById('filters');
+    if (toggleDiv.classList.contains('hidden')) {
+        toggleDiv.classList.remove('hidden');
+    } else {
+        toggleDiv.classList.add('hidden');
+    }
+});
+</script>
+
+<script>
+    document.getElementById('togglefilter').addEventListener('click', function() {
+    var toggleDiv = document.getElementById('filter');
     if (toggleDiv.classList.contains('hidden')) {
         toggleDiv.classList.remove('hidden');
     } else {
