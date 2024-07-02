@@ -42,6 +42,12 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
+        screens: {
+            'sm': '640px', 
+            'md': '850px', 
+            'lg': '1024px', 
+            'xl': '1280px', 
+        },
         extend: {},
     },
     plugins: [

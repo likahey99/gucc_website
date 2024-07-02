@@ -35,3 +35,44 @@ def logout(request):
 
 def koalas(request):    
     return render(request, 'gucc_app/koalas.html')
+
+def basekit(request):    
+    return render(request, 'gucc_app/includes/basekit.html')
+
+def kayakkit(request):    
+    return render(request, 'gucc_app/includes/kayakkit.html')
+
+def baseinventory(request):
+    kitlist = [
+        {'Id': 1, 'Type': 'Play', 'Size': 'L', 'owner': "Club"},
+        {'Id': 2, 'Type': 'Creek', 'Size': 'M', 'owner': "Patrick"},
+        {'Id': 3, 'Type': 'Half Slice', 'Size': 'S/M', 'owner': "Club"},
+        {'Id': 4, 'Type': 'D', 'Size': '194', 'owner': "Club"},
+        
+    ]
+
+    kittypes = [
+        "Kayaks",
+        "Paddles",
+        "Helmets",
+        "BAs",
+        "Spraydecks",
+        "Cags",
+        "Wetsuits",
+        "Safety Kit",
+        "Miscellaneous"
+
+    ]    
+
+    kitheaders = [
+        "Id",
+        "Type",
+        "Size",
+        "Owner",
+    
+    ]
+    context = {'kitlist': kitlist, 'kittypes': kittypes, 'kitheaders': kitheaders}
+    return render(request, 'gucc_app/includes/baseinventory.html', context)
+
+def test(request):
+    return render(request, 'gucc_app/test.html')  
