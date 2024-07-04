@@ -1,0 +1,38 @@
+{% load static tailwind_tags %} 
+{% tailwind_css %}
+
+<div class="m-2 px-2 bg-red-600 rounded-t">
+    <div class="rounded-full grid grid-cols-4 justify-items-center">
+        <button id="filter1" class="col-span-1 bg-red-600" data-target="para1">filter1</button>
+        <button id="filter2" class="col-span-1" data-target="para2">filter2</button>
+        <button id="filter3" class="col-span-1" data-target="para3">filter3</button>
+        <button id="filter4" class="col-span-1" data-target="para4">filter4</button>           
+    </div>
+
+    <div class="grid grid-cols-7">
+        {% for i in "abcdefg" %}
+            {% include './filter.html' %}
+        {% endfor %}
+
+        <p id="para1" class="hidden">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolor quisquam, doloribus quasi, odio laboriosam laudantium minima architecto aperiam veritatis amet libero cumque, eveniet enim? Sed veritatis aut beatae ipsa animi?</p>
+        <p id="para2" class="hidden">Paragraph 2 content goes here.</p>
+        <p id="para3" class="hidden">Paragraph 3 content goes here.</p>
+        <p id="para4" class="hidden">Paragraph 4 content goes here.</p>
+    </div>
+</div>
+
+
+
+<script>
+    document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Hide all paragraphs
+        document.querySelectorAll('p').forEach(p => p.classList.add('hidden'));
+
+        // Show the target paragraph
+        var targetId = this.getAttribute('data-target');
+        var targetElement = document.getElementById(targetId);
+        targetElement.classList.remove('hidden');
+    });
+}); 
+</script>

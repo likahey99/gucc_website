@@ -2,7 +2,7 @@
 <header>
     <nav class="bg-gray-800 text-gray-300 font-medium text-sm">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            <div class="relative flex items-center justify-between h-16">
+            <div class="relative flex items-center justify-between h-16 hover:[&_a]:bg-gray-700 hover:[&_a]:text-white">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
                     <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
@@ -21,10 +21,11 @@
                     </a>
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4">
-                            <a href="{% url 'gucc_app:index' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Home</a>
-                            <a href="{% url 'gucc_app:about' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">About</a>
-                            <a href="{% url 'gucc_app:events' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Events</a>
-                            <a href="{% url 'gucc_app:gallery' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Gallery</a>
+                            <a href="{% url 'gucc_app:index' %}" class=" px-3 py-2 rounded-md">Home</a>
+                            <a href="{% url 'gucc_app:about' %}" class=" px-3 py-2 rounded-md">About</a>
+                            <a href="{% url 'gucc_app:events' %}" class=" px-3 py-2 rounded-md">Events</a>
+                            <a href="{% url 'gucc_app:gallery' %}" class=" px-3 py-2 rounded-md">Gallery</a>
+                            {% if user.is_authenticated %}
                             <div class="relative">
                                 <button class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center" aria-haspopup="true" aria-expanded="false" id="inventory-dropdown">
                                     Inventory
@@ -38,6 +39,7 @@
                                     <a class="block px-4 py-2" href="#">Pool Cupboard</a>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -45,22 +47,28 @@
                     <div class="flex space-x-4">
                         <div class="hidden sm:block">
                             {% if user.is_authenticated %}
-                                <a href="{% url 'gucc_app:profile' user.username %}" class=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Profile</a>
-                                <a href="{% url 'gucc_app:logout' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Logout</a>
+                                <a href="{% url 'gucc_app:profile' user.username %}" class=" px-3 py-2 rounded-md">Profile</a>
+                                <a href="{% url 'gucc_app:logout' %}" class=" px-3 py-2 rounded-md">Logout</a>
                             {% else %}
-                                <a href="{% url 'gucc_app:login' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Login</a>
-                                <a href="{% url 'gucc_app:register' %}" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">Register</a>
+                                <a href="{% url 'gucc_app:login' %}" class=" px-3 py-2 rounded-md">Login</a>
+                                <a href="{% url 'gucc_app:register' %}" class=" px-3 py-2 rounded-md">Register</a>
                             {% endif %}
                         </div>
-                        <a href="https://www.facebook.com/profile.php?id=100054235790441" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.instagram.com/gusacanoe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="https://github.com/likahey99/gucc_website" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
-                            <i class="fab fa-github"></i>
-                        </a>
+                        <div>
+                            <a href="https://www.facebook.com/profile.php?id=100054235790441" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://www.instagram.com/gusacanoe?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="https://github.com/likahey99/gucc_website" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,10 +77,11 @@
     <!-- Mobile menu, show/hide based on menu state. -->
 <div class="sm:hidden hidden bg-slate-400 text-gray-700" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1 text-base">
-        <a href="{% url 'gucc_app:index' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Home</a>
-        <a href="{% url 'gucc_app:about' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">About</a>
-        <a href="{% url 'gucc_app:events' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Events</a>
-        <a href="{% url 'gucc_app:gallery' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Gallery</a>
+        <a href="{% url 'gucc_app:index' %}" class="block px-3 py-2 rounded-md">Home</a>
+        <a href="{% url 'gucc_app:about' %}" class="block px-3 py-2 rounded-md">About</a>
+        <a href="{% url 'gucc_app:events' %}" class="block px-3 py-2 rounded-md">Events</a>
+        <a href="{% url 'gucc_app:gallery' %}" class="block px-3 py-2 rounded-md">Gallery</a>
+        {% if user.is_authenticated %}
         <div class="relative">
             <button id="mobile-inventory-button" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center" aria-haspopup="true" aria-expanded="false">
                 Inventory
@@ -80,16 +89,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                 </svg>
             </button>
-            <!-- Add Tailwind CSS classes to the dropdown menu -->
         <div id="mobile-inventory-menu" class="hidden bg-slate-300 pt-1 rounded">
             <a class="block px-4 py-2" href="{% url 'gucc_app:main_shed' %}">Main Shed</a>
             <a class="block px-4 py-2" href="{% url 'gucc_app:macpherson_shed' %}">Repair Shed</a>
             <a class="block px-4 py-2" href="#">Pool Cupboard</a>
         </div>
-        </div>
-        <!-- Add Login and Register links here -->
-        <a href="{% url 'gucc_app:login' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Login</a>
-        <a href="{% url 'gucc_app:register' %}" class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md">Register</a>
+    </div>  
+    {% endif %}
+        <a href="{% url 'gucc_app:login' %}" class="block px-3 py-2 rounded-md">Login</a>
+        <a href="{% url 'gucc_app:register' %}" class="block px-3 py-2 rounded-md">Register</a>
     </div>
 </div>
 </header>
