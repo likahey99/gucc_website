@@ -137,3 +137,22 @@ NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'gucc_app': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+        },
+    },
+}

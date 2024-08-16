@@ -1,0 +1,132 @@
+{% load static tailwind_tags custom_filters %}
+{% tailwind_css %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" id="fontawesome-css">
+    <style>
+        /* rounds the bottom of the tables cos table rows are dorks who dont want to be rounded */
+        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+    </style>
+</head>
+
+{% include './navbar.html' %}
+
+<h1 class="sm:hidden text-4xl font-bold text-violet-500 text-center m-4">Pool Store</h1>
+
+<div class="grid grid-cols-3 m-4 text-center items-center flex-wrap">
+    <div class="">
+        {% include './storageselector.html' %}
+    </div>
+    {%for store in stores%}
+        {% with storetextcolour='text-'|addstr:store.colour|addstr:'-600'%}
+    <h1 class="hidden sm:grid text-4xl font-bold {{storetextcolour}}">
+            {{store.name}}
+        {% endwith %}
+        {%endfor%}
+    </h1>
+    <div class="justify-self-end col-start-3">
+        <button id="togglefish" class="border-black border-2 rounded-2xl px-4 h-full">
+            <h1 class="text-2xl font-bold text-violet-500">Filters</h1>
+        </button>
+    </div>
+</div>
+
+<div id="filters" class="hidden">
+    {% with numkits=kittypes|length %}
+    {% with colsnum='md:grid-cols-'|addstr:numkits%}
+    <div class="grid grid-cols-3 {{ colsnum }} text-sm md:text-base gap-4 p-4">
+        {% for kit in kittypes %}
+            <button class="filter-btn bg-violet-500 border border-black font-semibold py-2 px-4 rounded-lg" data-kit="{{ kit }}">{{ kit }}</button>
+        {% endfor %}
+    </div>
+    {% endwith %}
+    {% endwith %}
+</div>
+
+<div class="grid sm:grid-cols-2 sm:text-sm md:grid-cols-3 lg:text-lg justify-items-center [&_div]:border-black [&>div]:border-2 [&>div]:m-2 [&>div]:rounded-xl p-4 gap-10">
+    {% for kit in kittypes %}
+    <div id="{{ kit }}-tablediv" class="text-center mx-auto w-[80%]">
+        <h2 class="text-2xl mb-2 font-mono">{{ kit|capfirst }}</h2>
+        <table id="table-{{ kit }}" class="min-w-full rounded-full px-2">
+            <thead>
+                <tr class="bg-blue-400 border-b-2 border-t-2 border-black max-w-full">
+                    {% get_kitheaders kitheaders kit as headers %}
+                    {% for header in headers %}
+                        <th class="sortable-header max-w-full py-2">{{ header }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody class="rounded text-center">
+                {% get pool kit as items %}
+                {% for item in items %}
+                    <tr class="even:bg-pink-200 odd:bg-pink-400 rounded-b-full">
+                        {% for header in headers %}
+                            <td class="py-2">{{ item|get_field_value:header }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.getElementById('togglefish').addEventListener('click', function() {
+        var toggleDiv = document.getElementById('filters');
+        toggleDiv.classList.toggle('hidden');
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll(".filter-btn");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", function() {
+                this.classList.toggle("bg-violet-500");
+                this.classList.toggle("bg-violet-300");
+
+                const kitType = this.getAttribute("data-kit");
+                const selectedTable = document.getElementById(`${kitType}-tablediv`);
+
+                if (selectedTable) {
+                    selectedTable.classList.toggle("hidden");
+                }
+            });
+        });
+    });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const tables = document.querySelectorAll("table");
+
+    tables.forEach(table => {
+        const headers = table.querySelectorAll(".sortable-header");
+
+        headers.forEach(header => {
+            header.addEventListener("click", function() {
+                const table = header.closest("table");
+                const rows = Array.from(table.querySelectorAll("tbody tr"));
+                const columnIndex = Array.prototype.indexOf.call(header.parentNode.children, header);
+                const isAscending = header.classList.contains("sorted-asc");
+
+                // Toggle the sorting direction
+                headers.forEach(h => h.classList.remove("sorted-asc", "sorted-desc"));
+                header.classList.toggle("sorted-asc", !isAscending);
+                header.classList.toggle("sorted-desc", isAscending);
+
+                // Sort rows
+                rows.sort((a, b) => {
+                    const aText = a.cells[columnIndex].textContent.toLowerCase();
+                    const bText = b.cells[columnIndex].textContent.toLowerCase();
+
+                    return isAscending ? bText.localeCompare(aText) : aText.localeCompare(bText);
+                });
+
+                // Append sorted rows
+                rows.forEach(row => table.querySelector("tbody").appendChild(row));
+            });
+        });
+    });
+});
+
+</script>

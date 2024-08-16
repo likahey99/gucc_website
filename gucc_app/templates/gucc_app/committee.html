@@ -1,0 +1,24 @@
+{% extends 'gucc_app/base.html' %}
+{% load static tailwind_tags %}
+
+{% block title_block %} Committee {% endblock %}
+
+{% block head_block %}
+{% endblock %}
+
+{% block content_block %}
+<div class="grid sm:grid-cols-2 sm:text-sm md:grid-cols-3 lg:text-lg justify-items-center [&_div]:border-black [&>div]:border-2 [&>div]:m-2 [&>div]:rounded-xl p-4 gap-10">
+    {% if committee %}
+    {% for member in committee %}
+    <div class="py-2 min-w-[75%]">
+        <h1 class="text-center font-bold text-3xl text-blue-700 border-black border-b-2 pb-2">{{ member.get_position_display }}</h1>
+        <h2 class="text-center font-bold text-2xl p-1">{{ member.name }}</h2>
+        <img class="mx-auto" src="{{ member.img.url }}" alt="image">
+        <p class="md:text-sm p-1 text-center">
+            {{ member.blurb }}
+        </p>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}

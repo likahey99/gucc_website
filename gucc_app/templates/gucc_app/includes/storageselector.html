@@ -1,13 +1,26 @@
-{% load static tailwind_tags %} 
+{% load static tailwind_tags custom_filters %}
 {% tailwind_css %}
 
-<div class="container grid-rows-2 border-cyan-400 border-2 text-base sm:text-lg text-center w-full sm:w-[70%] md:w-[60%] lg:w-1/2 rounded-2xl">
-    <div class="border-b-2">
-        <button class="font-bold text-green-600">Garscube</button>
-    </div>
-    <div>
-        <button class="font-bold text-red-600">MacPherson</button>
+<div class="container first:border border-black border-2 text-base sm:text-lg text-center w-full sm:w-[70%] md:w-[60%] lg:w-1/2 rounded-2xl">
+    <div class="grid grid-rows-2">
+        {% if otherstores %}
+        {% for otherstore in otherstores %}
+            {% with storecolour='text-'|addstr:otherstore.colour|addstr:'-600' %}
+            {% if otherstore.name == "Pool" %}
+                <a href="{% url 'gucc_app:pool' %}" class="{{ storecolour }}">
+                    <button class="font-bold {{ storecolour }}">{{ otherstore.name }}</button>
+                </a>
+            {% elif otherstore.name == "Garscube" %}
+                <a href="{% url 'gucc_app:garscube' %}" class="{{ storecolour }}">
+                    <button class="font-bold {{ storecolour }}">{{ otherstore.name }}</button>
+                </a>
+            {% elif otherstore.name == "Repair" %}
+                <a href="{% url 'gucc_app:macpherson' %}" class="{{ storecolour }}">
+                <button class="font-bold {{ storecolour }}">{{ otherstore.name }}</button>
+            </a>
+        {% endif %}
+            {% endwith %}
+        {% endfor %}
+        {% endif %}
     </div>
 </div>
-
-

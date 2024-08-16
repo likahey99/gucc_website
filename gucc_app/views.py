@@ -1,5 +1,7 @@
-from django.shortcuts import render
-
+from django.shortcuts import redirect, render, get_object_or_404
+from .models import Garscube, Store, Pool, Committee, Helmet, Kayak, Paddle, BA, Spraydeck, Ball, Miscellaneous
+from django.urls import reverse
+from django.db import models
 # Create your views here.
 def index(request):
     return render(request, 'gucc_app/index.html')
@@ -43,36 +45,77 @@ def kayakkit(request):
     return render(request, 'gucc_app/includes/kayakkit.html')
 
 def baseinventory(request):
-    kitlist = [
-        {'Id': 1, 'Type': 'Play', 'Size': 'L', 'owner': "Club"},
-        {'Id': 2, 'Type': 'Creek', 'Size': 'M', 'owner': "Patrick"},
-        {'Id': 3, 'Type': 'Half Slice', 'Size': 'S/M', 'owner': "Club"},
-        {'Id': 4, 'Type': 'D', 'Size': '194', 'owner': "Club"},
-        
-    ]
-
-    kittypes = [
-        "Kayaks",
-        "Paddles",
-        "Helmets",
-        "BAs",
-        "Spraydecks",
-        "Cags",
-        "Wetsuits",
-        "Safety Kit",
-        "Miscellaneous"
-
-    ]    
-
-    kitheaders = [
-        "Id",
-        "Type",
-        "Size",
-        "Owner",
-    
-    ]
-    context = {'kitlist': kitlist, 'kittypes': kittypes, 'kitheaders': kitheaders}
-    return render(request, 'gucc_app/includes/baseinventory.html', context)
+    return render(request, 'gucc_app/baseinventory.html')
 
 def test(request):
     return render(request, 'gucc_app/test.html')  
+
+def committee(request):
+    committee = Committee.objects.all()
+    return render(request, 'gucc_app/committee.html', {'committee': committee})
+
+def welfare(request):
+    return render(request, 'gucc_app/welfare.html')
+
+def pool(request):
+    pool = Pool.objects.first()
+
+    store = get_object_or_404(Store, name='Pool')
+
+    otherstores = Store.objects.exclude(name='Pool')
+
+    kittypes = [field.name for field in Pool._meta.get_fields() if isinstance(field, models.ManyToManyField)]
+
+    kitheaders = {
+        'helmets': ['Id', 'Size', 'Colour', 'Type'],
+        'kayaks': ['Id', 'Type', 'Size', 'Colour', 'Slot'],
+        'paddles': ['Id', 'Feather', 'Material', 'Group', 'Size', 'RightHanded'],
+        'bas': ['Type', 'MainColour', 'InnerColour', 'Number', 'Size'],
+        'spraydecks': ['Id', 'DeckSize', 'WaistSize'],
+        'balls': ['Id', 'Size'],
+        'miscellaneous': ['Id', 'Description']
+    }
+
+    context = {
+        'storetype': pool,
+        'kittypes': kittypes,
+        'kitheaders': {kittype: kitheaders.get(kittype, []) for kittype in kittypes},
+        'store': store,
+        'otherstores': otherstores
+    }
+
+    # Render the template with the context
+    return render(request, 'gucc_app/pool.html', context) 
+
+def garscube(request):
+    garscube = Garscube.objects.first()
+
+    store = get_object_or_404(Store, name='Garscube')
+
+    otherstores = Store.objects.exclude(name='Garscube')
+
+    kittypes = [field.name for field in Garscube._meta.get_fields() if isinstance(field, models.ManyToManyField)]
+
+    kitheaders = {
+        'helmets': ['Id', 'Size', 'Colour', 'Type'],
+        'kayaks': ['Id', 'Type', 'Size', 'Colour', 'Slot'],
+        'paddles': ['Id', 'Feather', 'Material', 'Group', 'Size', 'RightHanded'],
+        'bas': ['Type', 'MainColour', 'InnerColour', 'Number', 'Size'],
+        'spraydecks': ['Id', 'DeckSize', 'WaistSize'],
+        'wetsuits': ['Id', 'Size'],
+        'miscellaneous': ['Id', 'Description']
+    }
+
+    context = {
+        'storetype': garscube,
+        'kittypes': kittypes,
+        'kitheaders': {kittype: kitheaders.get(kittype, []) for kittype in kittypes},
+        'store': store,
+        'otherstores': otherstores
+    }
+
+    # Render the template with the context
+    return render(request, 'gucc_app/pool.html', context) 
+
+def macpherson(request):
+    return render(request, 'gucc_app/macpherson.html')

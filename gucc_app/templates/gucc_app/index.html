@@ -7,20 +7,24 @@
 {% endblock %}
 
 {% block content_block %}
-    <h1 class="text-4xl text-center mt-8">Welcome to the GUCC website</h1>
-        <div class="md:grid md:grid-cols-4">
-            <img class="mx-auto" src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo">
-            <div class="col-span-2">
-                <p class="text-center mt-4">This is a website for the Geelong Underwater Camera Club</p>
-                <p class="text-center">We are a group of underwater photographers and videographers based in Geelong, Victoria</p>
-                <p class="text-center">We meet regularly to share our work and learn from each other</p>
-                <p class="text-center">We also organise trips and events to explore the underwater world</p>
-                <p class="text-center">Please use the navigation menu to explore our website</p>
-            </div>
-        <img class="mx-auto" src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo">
-        
+    <div style="background-color: rgba(51, 150, 248, 0.69);" class="p-4 m-0 text-center rounded-t-full align-middle">
+        <h1 class="text-4xl text-center font-mono font-semibold ">Welcome to GUCC</h1>
     </div>
-    {% include './includes/calendar.html' %}
-    <!-- https://www.reddit.com/r/css/comments/buwtof/styling_an_embedded_google_calendar_beginner/ -->
+    <div class="md:grid grid-cols-2">
+        <img class="mx-auto h-full" src="{% static 'images/liz_nesk.jpg' %}" alt="coolRiverPic">
+        <img class="mx-auto h-full" src="{% static 'images/kai_nesk.jpg' %}" alt="coolRiverPic">
+    </div>
+        <div class="col-span-2" style="background: rgba(51, 150, 248, 0.69);">
+            <div class="col-span-2 text-base font-semibold pb-2">
+                <p class="text-center">Welcome to the Glasgow Uni Canoe Club!</p>
+                <p class="text-center">We are an inclusive kayaking club for all skill levels!</p>
+                <p class="text-center">We meet weekly to improve our kayaking skills, but more importantly to have fun</p>
+                <p class="text-center">We have a session in the uni pool every thursday followed up by FREE PIZZA and good vibes in bank street kitchen</p>
+                <p class="text-center">We also organise kayak trips and events across scotland to rivers, events and more!</p>
+                <p class="text-center">Come join us if you are a kayaking pro sending grade 5s or if you have never been in a kayak before (I hadn't!) </p>
+            </div>
+        </div>
+        {% include './includes/calendar.html' %}
+        <!-- https://www.reddit.com/r/css/comments/buwtof/styling_an_embedded_google_calendar_beginner/ -->
 
 {% endblock %}

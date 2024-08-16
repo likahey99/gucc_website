@@ -1,9 +1,19 @@
 {% load static %}
+<head>
+    <style>
+        .dropdown-content {
+            margin-bottom: 10rem; /* Adjust the margin as needed */
+        }
+    </style>
+
+<script src="{% static 'js/navbar.js' %}" defer></script>
+</head>
+
 <header>
     <nav class="bg-gray-800 text-gray-300 font-medium text-sm">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16 hover:[&_a]:bg-gray-700 hover:[&_a]:text-white">
-                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <div class="absolute inset-y-0 left-0 flex items-center md:hidden">
                     <!-- Mobile menu button-->
                     <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
                         <span class="sr-only">Open main menu</span>
@@ -15,47 +25,71 @@
                         </svg>
                     </button>
                 </div>
-                <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+                <div class="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
                     <a href="{% url 'gucc_app:index' %}" class="flex-shrink-0 d-none d-lg-inline-block">
                         <img class="h-10 w-auto" src="{% static 'images/canoe_club_logo.jpg' %}" alt="logo">
                     </a>
-                    <div class="hidden sm:block sm:ml-6">
+                    <div class="hidden md:block md:ml-6">
                         <div class="flex space-x-4">
                             <a href="{% url 'gucc_app:index' %}" class=" px-3 py-2 rounded-md">Home</a>
-                            <a href="{% url 'gucc_app:about' %}" class=" px-3 py-2 rounded-md">About</a>
-                            <a href="{% url 'gucc_app:events' %}" class=" px-3 py-2 rounded-md">Events</a>
+
+                            <div class="dropdown relative inline-block text-center">
+                                <button class="dropbtn hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center cursor-pointer">
+                                    About
+                                    <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-content absolute hidden bg-gray-800 pt-1 w-full *:block *:px-2 *:py-2 z-50">
+                                    <a href="{% url 'gucc_app:about' %}" class="">
+                                        About Us
+                                    </a>
+                                    <a href="{% url 'gucc_app:committee' %}" class="">
+                                        Committee
+                                    </a>
+                                    <a href="{% url 'gucc_app:welfare' %}" class="">
+                                        Welfare
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- <a href="{% url 'gucc_app:events' %}" class=" px-3 py-2 rounded-md">Events</a> -->
                             <a href="{% url 'gucc_app:gallery' %}" class=" px-3 py-2 rounded-md">Gallery</a>
-                            {% if user.is_authenticated %}
-                            <div class="relative">
-                                <button class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center" aria-haspopup="true" aria-expanded="false" id="inventory-dropdown">
+                            
+                            <div class="dropdown relative inline-block text-center">
+                                <button class="dropbtn hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center cursor-pointer">
                                     Inventory
                                     <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                                     </svg>
                                 </button>
-                                <div class="dropdown-menu absolute hidden bg-gray-800 pt-1" id="inventory-menu">
-                                    <a class="block px-4 py-2" href="{% url 'gucc_app:main_shed' %}">Main Shed</a>
-                                    <a class="block px-4 py-2" href="{% url 'gucc_app:macpherson_shed' %}">Repair Shed</a>
-                                    <a class="block px-4 py-2" href="#">Pool Cupboard</a>
+                                <div class="dropdown-content absolute hidden bg-gray-800 pt-1 w-full *:block *:px-2 *:py-2 z-50">
+                                    <a href="{% url 'gucc_app:garscube' %}" class="">
+                                        Garscube
+                                    </a>
+                                    <a href="{% url 'gucc_app:macpherson' %}" class="">
+                                        MacPherson
+                                    </a>
+                                    <a href="{% url 'gucc_app:pool' %}" class="">
+                                        Pool Cupboard
+                                    </a>
                                 </div>
-                            </div>
-                            {% endif %}
+                            </div>       
+
                         </div>
                     </div>
                 </div>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                     <div class="flex space-x-4">
-                        <div class="hidden sm:block">
+                        <div class="hidden md:block">
                             {% if user.is_authenticated %}
-                                <a href="{% url 'gucc_app:profile' user.username %}" class=" px-3 py-2 rounded-md">Profile</a>
                                 <a href="{% url 'gucc_app:logout' %}" class=" px-3 py-2 rounded-md">Logout</a>
                             {% else %}
                                 <a href="{% url 'gucc_app:login' %}" class=" px-3 py-2 rounded-md">Login</a>
-                                <a href="{% url 'gucc_app:register' %}" class=" px-3 py-2 rounded-md">Register</a>
                             {% endif %}
                         </div>
                         <div>
-                            <a href="https://www.facebook.com/profile.php?id=100054235790441" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
+                            <a href="https://www.facebook.com/profile.php?id=1.000542e+14" target="_blank" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
                         </div>
@@ -75,60 +109,54 @@
         </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu state. -->
-<div class="sm:hidden hidden bg-slate-400 text-gray-700" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1 text-base">
-        <a href="{% url 'gucc_app:index' %}" class="block px-3 py-2 rounded-md">Home</a>
-        <a href="{% url 'gucc_app:about' %}" class="block px-3 py-2 rounded-md">About</a>
-        <a href="{% url 'gucc_app:events' %}" class="block px-3 py-2 rounded-md">Events</a>
-        <a href="{% url 'gucc_app:gallery' %}" class="block px-3 py-2 rounded-md">Gallery</a>
-        {% if user.is_authenticated %}
-        <div class="relative">
-            <button id="mobile-inventory-button" class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center" aria-haspopup="true" aria-expanded="false">
-                Inventory
-                <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-            </button>
-        <div id="mobile-inventory-menu" class="hidden bg-slate-300 pt-1 rounded">
-            <a class="block px-4 py-2" href="{% url 'gucc_app:main_shed' %}">Main Shed</a>
-            <a class="block px-4 py-2" href="{% url 'gucc_app:macpherson_shed' %}">Repair Shed</a>
-            <a class="block px-4 py-2" href="#">Pool Cupboard</a>
+    <div class="md:hidden hidden bg-slate-400 text-gray-700" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1 text-base">
+            <a href="{% url 'gucc_app:index' %}" class="block px-3 py-2 rounded-md">Home</a>
+
+            <div class="dropdown relative inline-block text-center z-50">
+                <button class="dropbtn hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center cursor-pointer">
+                    About
+                    <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="dropdown-content absolute hidden bg-gray-800 pt-1 w-full *:block *:px-2 *:py-2 text-white z-50">
+                    <a href="{% url 'gucc_app:about' %}" class="">
+                        About Us
+                    </a>
+                    <a href="{% url 'gucc_app:committee' %}" class="">
+                        Committee
+                    </a>
+                    <a href="{% url 'gucc_app:welfare' %}" class="">
+                        Welfare
+                    </a>
+                </div>
+            </div>
+            
+            <!-- <a href="{% url 'gucc_app:events' %}" class="block px-3 py-2 rounded-md">Events</a> -->
+            <a href="{% url 'gucc_app:gallery' %}" class="block px-3 py-2 rounded-md">Gallery</a>
+
+            <div class="dropdown relative inline-block text-center">
+                <button class="dropbtn hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md inline-flex items-center cursor-pointer">
+                    Inventory
+                    <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div class="dropdown-content absolute hidden bg-gray-800 pt-1 w-full *:block *:px-2 *:py-2 text-white z-50">
+                    <a href="garscube" class="">
+                        Garscube Storage
+                    </a>
+                    <a href="{% url 'gucc_app:macpherson' %}" class="">
+                        MacPherson Shed
+                    </a>
+                    <a href="{% url 'gucc_app:pool' %}" class="">
+                        Pool Cupboard
+                    </a>
+                </div>
+            </div>      
+
+            <a href="{% url 'gucc_app:login' %}" class="block px-3 py-2 rounded-md">Login</a>
         </div>
-    </div>  
-    {% endif %}
-        <a href="{% url 'gucc_app:login' %}" class="block px-3 py-2 rounded-md">Login</a>
-        <a href="{% url 'gucc_app:register' %}" class="block px-3 py-2 rounded-md">Register</a>
     </div>
-</div>
 </header>
-
-<script>
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-        var menu = document.getElementById('mobile-menu');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-            this.setAttribute('aria-expanded', 'true');
-        } else {
-            menu.classList.add('hidden');
-            this.setAttribute('aria-expanded', 'false');
-        }
-    });
-
-    document.getElementById('inventory-dropdown').addEventListener('click', function() {
-        var menu = document.getElementById('inventory-menu');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-        } else {
-            menu.classList.add('hidden');
-        }
-    });
-
-    document.getElementById('mobile-inventory-button').addEventListener('click', function() {
-        var menu = document.getElementById('mobile-inventory-menu');
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-        } else {
-            menu.classList.add('hidden');
-        }
-    });
-</script>

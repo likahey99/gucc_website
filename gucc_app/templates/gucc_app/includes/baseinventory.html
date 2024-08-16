@@ -1,95 +1,87 @@
-{% load static tailwind_tags %} 
+{% load static tailwind_tags custom_filters %}
 {% tailwind_css %}
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet" id="fontawesome-css">
+    <style>
+        /* rounds the bottom of the tables cos table rows are dorks who dont want to be rounded */
+        tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+        tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+    </style>
+    <script src="{% static 'js/baseinventory.js' %}" defer></script>
 </head>
 
 {% include './navbar.html' %}
 
-<!-- This heading only shows when in mobile view-->
-<!-- Quite elegant if you ask me-->
-<h1 class="sm:hidden text-4xl font-bold text-violet-500 text-center m-4">Pool Store</h1>
-
-<div class="grid grid-cols-3 m-4 text-center items-center flex-wrap">
-    <div class="">
-        {% include './storageselector.html' %}
-    </div>
-    <h1 class="hidden sm:grid text-4xl font-bold text-violet-500">Pool Store</h1>
-    <div class="justify-self-end col-start-3">
-        <button id="togglefish" class="border-black border-2 rounded-2xl px-4 h-full">
-            <h1 class="text-2xl font-bold text-violet-500">Filters</h1>
-        </button>
-    </div>
-</div>
-
-<div id="filters" class="hidden">
-    <div class="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-9 mx-2 flex-wrap">
-        {% for i in "abcdefghi" %}
-            {% include './filter.html' %}
-        {% endfor %}
-    </div>
-</div>
-
-
-<div class="grid sm:grid-cols-2 sm:text-sm md:grid-cols-3 lg:text-lg justify-items-center [&_div]:border-black [&>div]:border-2 [&>div]:m-2 [&>div]:rounded-xl p-4 gap-10">
-    {% for type in kittypes %}
-        <div class="text-center mx-auto">
-            <div class="flex justify-around items-center m-2">
-                <h1 class="font-medium text-xl grow">{{type}}</h1>
-                <button id="togglefilter" class="border-black border-2 rounded-xl justify-self-end mr-4 px-4">
-                    <h2>Filters</h2>
+{% if store %}
+    {% with storetextcolour='text-'|addstr:store.colour|addstr:'-600' %}
+    <!-- DO NOT REMOVE THE BELOW COMMENT OR THE COLOURS WILL BREAK -->
+    <!-- text-violet-600 text-red-600 text-yellow-600 text-green-600 -->
+    <!-- its cos of tailwind needing to be able to have pre parsed the classes -->
+    <h1 class="sm:hidden text-3xl font-bold text-center m-4 {{ storetextcolour }}">Pool Store</h1>
+        <div class="grid grid-cols-3 m-4 text-center items-center flex-wrap">
+            <div class="">
+                {% include './storageselector.html' %}
+            </div>
+            <h1 class="hidden sm:grid text-4xl font-bold {{ storetextcolour }}">
+                {{ store.name }}
+            </h1>
+            <div class="justify-self-end col-start-3 {{ storetextcolour }}">
+                <button id="togglefish" class="border-black border-2 rounded-2xl px-4 h-full">
+                    <h1 class="text-2xl font-bold">Filters</h1>
                 </button>
             </div>
-            <div>
-                <div id="filter" class="hidden grid grid-cols-3 mx-2">
-                    
-                    <!-- {% for i in "abc" %} -->
-                        <!-- Instead of filter needs to be element that opens a dropdown or list below -->
-                         <!-- probs a repeat of Filters buttons -->
-                         <!-- Per filter that then lists what you can filter by -->
-                        <!-- Filters on or off by default? -->
-
-                         <!-- {% include './filter.html' %} -->
-                    <!-- {% endfor %}  -->
-                </div>
-            </div>
-
-            <div class="bg-blue-400 border-b-2 border-t-2">
-            <div class="bg-blue-400 rounded-full px-3 grid grid-cols-4 justify-items-center m-2">
-                {% for head in kitheaders %}
-                    <h1 class="font-medium text-xl sm:text-base lg:text-xl" onclick="sortKits('{{head}}')">{{head}}</h1>
-                {% endfor %}
-            </div>
-            </div>
-
-            {% for kit in kitlist %}
-                <!-- kit content goes here -->
-                {% include 'gucc_app/includes/basekit.html' with kit=kit %}
-            {% endfor %}
-
         </div>
-    {% endfor %}
+    {% endwith %}
+{% endif %}
+
+<div id="filters" class="hidden">
+    {% if kittypes %}
+        {% with numkits=kittypes|length %}
+            {% with colsnum='md:grid-cols-'|addstr:numkits %}
+            <!-- md:grid-cols-7  md:grid-cols-8 md:grid-cols-9 -->
+            <div class="grid grid-cols-3 {{ colsnum }} text-sm md:text-base gap-4 p-4">
+            {% if store %}
+                {% with storebgcolour='bg-'|addstr:store.colour|addstr:'-600' %}
+                    <!-- bg-violet-600 bg-yellow-600 bg-red-600 bg-green-600 -->
+                    {% for kit in kittypes %}
+                        <button class="filter-btn {{storebgcolour}} border border-black font-semibold py-2 px-4 rounded-lg hover:cursor-pointer " data-kit="{{ kit }}">{{ kit }}</button>
+                    {% endfor %}
+                {% endwith %}
+            {% endif %}
+            </div>
+            {% endwith %}
+        {% endwith %}
+    {% endif %}
+            </div>
+
+
+<div class="grid sm:grid-cols-2 sm:text-sm md:grid-cols-3 lg:text-lg justify-items-center [&_div]:border-black [&>div]:border-2 [&>div]:m-2 [&>div]:rounded-xl gap-y-10">
+    {% if kittypes %}
+        {% for kit in kittypes %}
+            <div id="{{ kit }}-tablediv" class="text-center mx-auto w-[85%] overflow-x-scro">
+                <h2 class="text-2xl mb-2 font-mono">{{ kit|capfirst }}</h2>
+                <table id="table-{{ kit }}" class="min-w-full rounded-full px-2">
+                    <thead>
+                        <tr class="bg-blue-400 border-b-2 border-t-2 border-black max-w-full">
+                            {% get_kitheaders kitheaders kit as headers %}
+                            {% for header in headers %}
+                                <th class="sortable-header max-w-full py-2">{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody class="rounded text-center">
+                        {% get storetype kit as items %}
+                        {% for item in items %}
+                            <tr class="even:bg-pink-200 odd:bg-pink-400 rounded-b-full">
+                                {% for header in headers %}
+                                    <td class="py-2">{{ item|get_field_value:header }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    {% endif %}
 </div>
-
-<script>
-    document.getElementById('togglefish').addEventListener('click', function() {
-    var toggleDiv = document.getElementById('filters');
-    if (toggleDiv.classList.contains('hidden')) {
-        toggleDiv.classList.remove('hidden');
-    } else {
-        toggleDiv.classList.add('hidden');
-    }
-});
-</script>
-
-<script>
-    document.getElementById('togglefilter').addEventListener('click', function() {
-    var toggleDiv = document.getElementById('filter');
-    if (toggleDiv.classList.contains('hidden')) {
-        toggleDiv.classList.remove('hidden');
-    } else {
-        toggleDiv.classList.add('hidden');
-    }
-});
-</script>
